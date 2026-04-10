@@ -1,0 +1,20 @@
+<h2>My Learning Requests</h2>
+
+<table border="1" cellpadding="10">
+<tr>
+    <th>Subject</th>
+    <th>Type</th>
+    <th>Status</th>
+</tr>
+
+{% for r, s in requests %}
+<tr>
+    <td>{{ s.subject_name }}</td>
+    <td>{{ s.subject_type }}</td>
+    <td>{{ r.status }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<br>
+<a href="/user">Back</a>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🎙 Voice Quiz</title>
+</head>
+<body>
+
+<h2>🎓 Voice-Based Quiz</h2>
+
+<h3>Question:</h3>
+<p>{{ question }}</p>
+
+<button onclick="startListening()">🎤 Speak Answer</button>
+
+<form method="POST">
+    <input type="hidden" name="answer" id="answer">
+    <br><br>
+    <button type="submit">Submit</button>
+</form>
+
+{% if result %}
+<hr>
+<h3>Result:</h3>
+<p id="resultText">{{ result }}</p>
+<button onclick="speakResult()">🔊 Hear Feedback</button>
+{% endif %}
+
+<br><br>
+<a href="/user/dashboard">⬅ Dashboard</a>
+
+<script>
+function startListening() {
+    let recognition = new webkitSpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        let text = event.results[0][0].transcript;
+        document.getElementById("answer").value = text;
+        alert("You answered: " + text);
+    }
+}
+
+function speakResult() {
+    let msg = new SpeechSynthesisUtterance(
+        document.getElementById("resultText").innerText
+    );
+    window.speechSynthesis.speak(msg);
+}
+</script>
+
+</body>
+</html>

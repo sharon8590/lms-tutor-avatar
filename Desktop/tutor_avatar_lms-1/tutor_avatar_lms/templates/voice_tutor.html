@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🎤 Voice AI Tutor</title>
+</head>
+<body>
+
+<h2>🎧 Voice-Based AI Tutor</h2>
+
+<button onclick="startListening()">🎙 Speak</button>
+
+<form method="POST" id="voiceForm">
+    <input type="hidden" name="question" id="question">
+    <br><br>
+    <button type="submit">Send to AI</button>
+</form>
+
+{% if response %}
+<hr>
+<h3>🤖 AI Says:</h3>
+<p id="aiResponse">{{ response }}</p>
+
+<button onclick="speak()">🔊 Hear AI Answer</button>
+{% endif %}
+
+<br><br>
+<a href="/user/dashboard">⬅ Back</a>
+
+<script>
+function startListening() {
+    let recognition = new webkitSpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        let text = event.results[0][0].transcript;
+        document.getElementById("question").value = text;
+        alert("You said: " + text);
+    }
+}
+
+function speak() {
+    let msg = new SpeechSynthesisUtterance(
+        document.getElementById("aiResponse").innerText
+    );
+    window.speechSynthesis.speak(msg);
+}
+</script>
+
+</body>
+</html>

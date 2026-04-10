@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🧩 Voice Puzzle</title>
+</head>
+<body>
+
+<h2>🧩 Voice Puzzle</h2>
+
+<p>{{ puzzle }}</p>
+
+<button onclick="startListening()">🎤 Speak Answer</button>
+
+<form method="POST">
+    <input type="hidden" name="answer" id="answer">
+    <br><br>
+    <button type="submit">Submit</button>
+</form>
+
+{% if result %}
+<hr>
+<p id="puzzleResult">{{ result }}</p>
+<button onclick="speak()">🔊 Hear Feedback</button>
+{% endif %}
+
+<br><br>
+<a href="/user/dashboard">⬅ Dashboard</a>
+
+<script>
+function startListening() {
+    let recognition = new webkitSpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        document.getElementById("answer").value =
+            event.results[0][0].transcript;
+        alert("You said: " + event.results[0][0].transcript);
+    }
+}
+
+function speak() {
+    let msg = new SpeechSynthesisUtterance(
+        document.getElementById("puzzleResult").innerText
+    );
+    window.speechSynthesis.speak(msg);
+}
+</script>
+
+</body>
+</html>

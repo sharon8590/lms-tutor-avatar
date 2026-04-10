@@ -1,0 +1,7 @@
+flask
+flask_sqlalchemy
+flask_login
+pyttsx3
+speechrecognition
+pyaudio
+bcrypt

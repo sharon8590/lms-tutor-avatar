@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Tutor Blackboard</title>
+    <style>
+        #avatar {
+            width: 200px;
+        }
+        #board {
+            margin-top: 10px;
+            width: 75%;
+            min-height: 150px;
+            padding: 15px;
+            background: #1e1e1e;
+            color: #00ff90;
+            font-family: monospace;
+            font-size: 16px;
+            white-space: pre-wrap;
+            border: 3px solid #444;
+        }
+    </style>
+</head>
+<body>
+
+<h2>🎤 {{ subject|capitalize }} AI Tutor</h2>
+
+<img id="avatar" src="/static/avatar/idle.png">
+
+<br><br>
+
+<button onclick="startListening()">🎙 Speak</button>
+
+<form method="POST">
+    <input type="hidden" name="question" id="question">
+    <br><br>
+    <button type="submit">Ask AI</button>
+</form>
+
+{% if response %}
+<hr>
+<h3>📋 Blackboard</h3>
+<div id="board"></div>
+
+<br>
+<button onclick="startTeaching()">▶ Start Teaching</button>
+{% endif %}
+
+<br><br>
+<a href="/user/dashboard">⬅ Dashboard</a>
+
+<script>
+let avatar = document.getElementById("avatar");
+let text = `{{ response|replace("\n","\\n") }}`;
+let index = 0;
+
+function typeWriter() {
+    if (index < text.length) {
+        document.getElementById("board").innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeWriter, 40);
+    }
+}
+
+function startTeaching() {
+    index = 0;
+    document.getElementById("board").innerHTML = "";
+
+    // Avatar talking
+    avatar.src = "/static/avatar/talking.gif";
+
+    // Voice output
+    let msg = new SpeechSynthesisUtterance(text);
+    msg.onend = function () {
+        avatar.src = "/static/avatar/idle.png";
+    };
+    window.speechSynthesis.speak(msg);
+
+    // Blackboard writing
+    typeWriter();
+}
+
+function startListening() {
+    let recognition = new webkitSpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        document.getElementById("question").value =
+            event.results[0][0].transcript;
+        alert("You said: " + event.results[0][0].transcript);
+    }
+}
+</script>
+
+</body>
+</html>
