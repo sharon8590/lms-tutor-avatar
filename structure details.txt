@@ -1,0 +1,20 @@
+Subject
+ ├── Syllabus
+ │    ├── Module 1: Basics
+ │    │      ├── Variables
+ │    │      ├── Data Types
+ │    │      └── Operators
+ │    ├── Module 2: Control Flow
+ │    ├── Module 3: Functions
+ │    └── Module 4: OOP
+ ├── AI Explanation (Text + Voice)
+ ├── Interactive Questions
+ ├── Quiz / Puzzle
+ └── Progress Tracking
+
+
+
+static/
+ └── avatar/
+     ├── idle.png
+     ├── talking.gif
