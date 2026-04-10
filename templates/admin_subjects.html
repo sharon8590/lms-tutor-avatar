@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Subjects</title>
+</head>
+<body>
+
+<h2>Admin – Manage Subjects</h2>
+
+<form method="post">
+    <input type="text" name="subject_name" placeholder="Subject Name" required>
+    <select name="subject_type" required>
+        <option value="">Select Type</option>
+        <option value="Technical">Technical</option>
+        <option value="Non-Technical">Non-Technical</option>
+    </select>
+    <button type="submit">Add Subject</button>
+</form>
+
+<hr>
+
+<table border="1" cellpadding="10">
+<tr>
+    <th>ID</th>
+    <th>Subject Name</th>
+    <th>Type</th>
+    <th>Actions</th>
+</tr>
+
+{% for s in subjects %}
+<tr>
+    <td>{{ s.id }}</td>
+    <td>{{ s.subject_name }}</td>
+    <td>{{ s.subject_type }}</td>
+    <td>
+        <a href="/admin/subject/edit/{{ s.id }}">Edit</a> |
+        <a href="/admin/subject/delete/{{ s.id }}"
+           onclick="return confirm('Are you sure?')">Delete</a>
+    </td>
+</tr>
+{% endfor %}
+</table>
+
+<br>
+<a href="/admin">Back to Dashboard</a> |
+<a href="/logout">Logout</a>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <p style="color:green">{{ messages[0] }}</p>
+  {% endif %}
+{% endwith %}
+
+</body>
+</html>

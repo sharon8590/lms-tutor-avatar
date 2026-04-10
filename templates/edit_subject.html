@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Subject</title>
+</head>
+<body>
+
+<h2>Edit Subject</h2>
+
+<form method="post">
+    <input type="text" name="subject_name"
+           value="{{ subject.subject_name }}" required>
+
+    <select name="subject_type" required>
+        <option value="Technical"
+          {% if subject.subject_type == "Technical" %}selected{% endif %}>
+          Technical
+        </option>
+
+        <option value="Non-Technical"
+          {% if subject.subject_type == "Non-Technical" %}selected{% endif %}>
+          Non-Technical
+        </option>
+    </select>
+
+    <button type="submit">Update</button>
+</form>
+
+<br>
+<a href="/admin/subjects">Back</a>
+
+</body>
+</html>

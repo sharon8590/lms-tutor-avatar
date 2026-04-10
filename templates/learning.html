@@ -1,0 +1,16 @@
+<img src="/static/avatars/tutor.gif" width="250">
+
+<div class="blackboard">
+  <p id="textOutput">Welcome! What do you want to learn today?</p>
+</div>
+
+<button onclick="speak()">🔊 Speak</button>
+
+<script>
+function speak(){
+  let msg = new SpeechSynthesisUtterance(
+    document.getElementById("textOutput").innerText
+  );
+  speechSynthesis.speak(msg);
+}
+</script>

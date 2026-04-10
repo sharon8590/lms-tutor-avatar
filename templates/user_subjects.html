@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Subject</title>
+</head>
+<body>
+
+<h2>Select Learning Subject</h2>
+
+<form method="post">
+    <select name="subject_id" required>
+        <option value="">-- Select Subject --</option>
+        {% for s in subjects %}
+            <option value="{{ s.id }}">
+                {{ s.subject_name }} ({{ s.subject_type }})
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Request Learning</button>
+</form>
+
+<br>
+<a href="/user">Back to Dashboard</a>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <p style="color:green">{{ messages[0] }}</p>
+  {% endif %}
+{% endwith %}
+
+</body>
+</html>
